@@ -1,0 +1,9 @@
+---
+
+  - name: Upgrade all packages for RedHat or Amazon Linux.
+    yum:
+      name: "*"
+      state: latest
+  
+  ...
+  

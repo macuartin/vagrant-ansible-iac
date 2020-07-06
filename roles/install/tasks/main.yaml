@@ -1,0 +1,60 @@
+---
+
+  - name: Install wget.
+    yum:
+      name: wget
+      state: present
+
+  - name: Install Java.
+    yum:
+      name: java-1.8.0-openjdk
+      state: present
+
+  - name: Download jenkins.repo.
+    get_url:
+      url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+      dest: /etc/yum.repos.d/jenkins.repo
+
+  - name: Import Jenkins Key.
+    rpm_key:
+      state: present
+      key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+
+  - name: Install jenkins
+    yum:
+      name: jenkins
+      state: present
+
+  - name: Enable Jenkins Service.
+    systemd:
+      name: jenkins
+      enabled: true
+
+  - name: Get Jenkins Home
+    shell: echo $JENKINS_HOME
+    changed_when: false
+    register: jenkins_home
+
+  - name: Set initial setup script
+    copy:
+      src: InitialConfig.groovy
+      dest: "{{jenkins_home.stdout}}/init.groovy.d/InitialConfig.groovy"
+
+  - name: Start Jenkins service.
+    systemd:
+      name: jenkins
+      state: started
+
+  - name: Wait for Jenkins Run.
+    wait_for: timeout=30
+
+  - name: Jenkins Initial Password
+    shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+    changed_when: false
+    register: result
+
+  - name: Print Initial Password
+    debug:
+      var: result.stdout
+
+...
