@@ -1,10 +1,16 @@
+#!/usr/bin/env groovy
+
 import jenkins.model.*
-import jenkins.install.InstallState
-Jenkins.instance.setNumExecutors(0)
+import hudson.security.*
 
-Jenkins.instance.setInstallState(InstallState.INITIAL_SETUP_COMPLETED)
 
-url = System.env.JENKINS_URL
-urlConfig = JenkinsLocationConfiguration.get()
-urlConfig.setUrl(url)
-urlConfig.save()
+def instance = Jenkins.get()
+
+def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+hudsonRealm.createAccount('macuartin','admin')
+instance.setSecurityRealm(hudsonRealm)
+
+def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
+instance.setAuthorizationStrategy(strategy)
+
+instance.save()
