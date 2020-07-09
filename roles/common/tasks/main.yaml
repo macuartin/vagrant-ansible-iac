@@ -1,0 +1,19 @@
+---
+
+  - name: Upgrade all packages for RedHat or Amazon Linux.
+    yum:
+      name: "*"
+      state: latest
+  
+  - name: Install wget.
+    yum:
+      name: wget
+      state: present
+
+  - name: Install Java.
+    yum:
+      name: java-1.8.0-openjdk
+      state: present
+
+...
+  
