@@ -187,5 +187,7 @@ tags
 # Ignore all local history of files
 .history
 
-# End of https://www.gitignore.io/api/vim,osx,macos,terraform,intellij+all,visualstudiocode
+# Vagrant Data
 .vagrant
+
+# End of https://www.gitignore.io/api/vim,osx,macos,terraform,intellij+all,visualstudiocode
