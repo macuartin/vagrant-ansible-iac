@@ -30,7 +30,7 @@
       src: InitialConfig.groovy
       dest: "{{ jenkins_home }}/init.groovy.d/InitialConfig.groovy"
 
-  - name: Set initial plugins script
+  - name: Set initial plugins requirements
     copy:
       src: InstallPlugins.groovy
       dest: "{{ jenkins_home }}/init.groovy.d/InstallPlugins.groovy"
