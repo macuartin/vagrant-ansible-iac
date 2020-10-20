@@ -1,0 +1,49 @@
+credentials:
+    system:
+        domainCredentials:
+            - credentials:
+                - usernamePassword:
+                    id: "git-jenkins"
+                    password: ${jcasc_key_github}
+                    scope: GLOBAL
+                    username: ${jcasc_user_github}
+                - aws:
+                    id: "agent_credentials"
+                    description: "credentials to use ecs plugin"
+                    iamRoleArn: ${agent_role}
+                    scope: SYSTEM
+                   
+jenkins:
+    systemMessage: "Jenkins JCasC Develop"
+    slaveAgentPort: 50000
+    remotingSecurity:
+      enabled: true
+    crumbIssuer:
+        standard:
+            excludeClientIPFromCrumb: false
+    markupFormatter:
+       rawHtml:
+           disableSyntaxHighlighting: false  
+    agentProtocols:
+    - "JNLP4-connect"
+    - "Ping"
+security:
+    scriptApproval:
+        approvedSignatures:
+            - "method io.jenkins.plugins.casc.ConfigurationAsCode configure"
+            - "staticMethod io.jenkins.plugins.casc.ConfigurationAsCode get"
+            - "staticMethod org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval get"     
+    apiToken:
+        creationOfLegacyTokenEnabled: false
+        tokenGenerationOnCreationEnabled: false
+        usageStatisticsEnabled: true
+    globalJobDslSecurityConfiguration:
+        useScriptSecurity: false
+    sSHD:
+        port: -1
+unclassified:
+    casCGlobalConfig:
+        configurationPath: "$JENKINS_HOME/jcasc/config"
+    location:
+        adminAddress: ${smtp_username}
+        url: ${jcasc_jenkins_location_url}

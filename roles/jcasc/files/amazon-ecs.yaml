@@ -1,0 +1,148 @@
+jenkins:
+  clouds:
+  - ecs:
+      allowedOverrides: "all"
+      cluster: ${jcasc_cluster_fgt}
+      credentialsId: "agent_credentials"
+      jenkinsUrl: ${jcasc_jenkins_for_agents_url}
+      maxCpu: 2048
+      name: "ecs-fargate"
+      regionName: ${jcasc_aws_region}
+      slaveTimeoutInSeconds: 300
+      taskPollingIntervalInSeconds: 30
+      templates:
+  #  Template terraform     
+      - templateName: "terraform-0-12-29"
+        label: "terraform0.12.29"
+        image: "${jcasc_aws_registry}/terraform:0.12.29-alpine3.10"      
+        cpu: 1024
+        memory: 2048
+        sharedMemorySize: 0
+        memoryReservation: 0
+        remoteFSRoot: "/home/jenkins"
+        executionRole: ${task_execution_role}
+        securityGroups: ${jcasc_aws_security_group_agents}
+        subnets: ${jcasc_aws_subnet_id_agents}
+        taskrole: ${task_execution_role}
+        launchType: "FARGATE"
+        logDriver: "awslogs"
+        logDriverOptions:
+        - name: "awslogs-group"
+          value: "/ecs/sample-jenkins-task-definition"
+        - name: "awslogs-region"
+          value: ${jcasc_aws_region}
+        - name: "awslogs-stream-prefix"
+          value: "ecs"
+        networkMode: "default"
+        platformVersion: "LATEST"
+        privileged: false
+        uniqueRemoteFSRoot: false
+        assignPublicIp: false
+ #  Template Java 8    
+      - templateName: "java-8"
+        label: "java8"
+        image: "${jcasc_aws_registry}/java:1.8-alpine3.10"      
+        cpu: 1024
+        memory: 2048
+        sharedMemorySize: 0
+        memoryReservation: 0
+        remoteFSRoot: "/home/jenkins"
+        executionRole: ${task_execution_role}
+        securityGroups: ${jcasc_aws_security_group_agents}
+        subnets: ${jcasc_aws_subnet_id_agents}
+        taskrole: ${task_execution_role}
+        launchType: "FARGATE"
+        logDriver: "awslogs"
+        logDriverOptions:
+        - name: "awslogs-group"
+          value: "/ecs/sample-jenkins-task-definition"
+        - name: "awslogs-region"
+          value: ${jcasc_aws_region}
+        - name: "awslogs-stream-prefix"
+          value: "ecs"
+        networkMode: "default"
+        platformVersion: "LATEST"
+        privileged: false
+        uniqueRemoteFSRoot: false
+        assignPublicIp: false
+#  Template maven    
+      - templateName: "maven-3-6-3"
+        label: "maven3.6.3"
+        image: "${jcasc_aws_registry}/maven:3.6.3-alpine3.10"      
+        cpu: 1024
+        memory: 2048
+        sharedMemorySize: 0
+        memoryReservation: 0
+        remoteFSRoot: "/home/jenkins"
+        executionRole: ${task_execution_role}
+        securityGroups: ${jcasc_aws_security_group_agents}
+        subnets: ${jcasc_aws_subnet_id_agents}
+        taskrole: ${task_execution_role}
+        launchType: "FARGATE"
+        logDriver: "awslogs"
+        logDriverOptions:
+        - name: "awslogs-group"
+          value: "/ecs/sample-jenkins-task-definition"
+        - name: "awslogs-region"
+          value: ${jcasc_aws_region}
+        - name: "awslogs-stream-prefix"
+          value: "ecs"
+        networkMode: "default"
+        platformVersion: "LATEST"
+        privileged: false
+        uniqueRemoteFSRoot: false
+        assignPublicIp: false
+  #  Template Gradle  
+      - templateName: "gradle-6-5-1"
+        label: "gradle6.5.1"
+        image: "${jcasc_aws_registry}/gradle:6.5.1-alpine3.10"      
+        cpu: 1024
+        memory: 2048
+        sharedMemorySize: 0
+        memoryReservation: 0
+        remoteFSRoot: "/home/jenkins"
+        executionRole: ${task_execution_role}
+        securityGroups: ${jcasc_aws_security_group_agents}
+        subnets: ${jcasc_aws_subnet_id_agents}
+        taskrole: ${task_execution_role}
+        launchType: "FARGATE"
+        logDriver: "awslogs"
+        logDriverOptions:
+        - name: "awslogs-group"
+          value: "/ecs/sample-jenkins-task-definition"
+        - name: "awslogs-region"
+          value: ${jcasc_aws_region}
+        - name: "awslogs-stream-prefix"
+          value: "ecs"
+        networkMode: "default"
+        platformVersion: "LATEST"
+        privileged: false
+        uniqueRemoteFSRoot: false
+        assignPublicIp: false
+  #  Template Packer  
+      - templateName: "packer-1-6-0"
+        label: "packer1.6.0"
+        image: "${jcasc_aws_registry}/gradle:6.5.1-alpine3.10"      
+        cpu: 1024
+        memory: 2048
+        sharedMemorySize: 0
+        memoryReservation: 0
+        remoteFSRoot: "/home/jenkins"
+        executionRole: ${task_execution_role}
+        securityGroups: ${jcasc_aws_security_group_agents}
+        subnets: ${jcasc_aws_subnet_id_agents}
+        taskrole: ${task_execution_role}
+        launchType: "FARGATE"
+        logDriver: "awslogs"
+        logDriverOptions:
+        - name: "awslogs-group"
+          value: "/ecs/sample-jenkins-task-definition"
+        - name: "awslogs-region"
+          value: ${jcasc_aws_region}
+        - name: "awslogs-stream-prefix"
+          value: "ecs"
+        networkMode: "default"
+        platformVersion: "LATEST"
+        privileged: false
+        uniqueRemoteFSRoot: false
+        assignPublicIp: false   

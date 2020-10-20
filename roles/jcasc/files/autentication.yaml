@@ -1,0 +1,8 @@
+jenkins:
+  disableRememberMe: false
+  securityRealm:
+    azure:
+      cacheDuration: 3600
+      clientId: ${azure_client_id}
+      clientSecret: ${azure_client_secret}
+      tenant: ${azure_tenant}

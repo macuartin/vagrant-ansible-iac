@@ -1,0 +1,26 @@
+---
+
+  - name: Set jenkins-support
+    copy:
+      src: "jenkins-support"
+      dest: "/usr/local/bin"
+  
+  - name: Set initial plugins scripts
+    copy:
+      src: "{{ item }}"
+      dest: "{{ jenkins_home }}"
+      mode: '0744'
+    with_fileglob: "*plugins.*"
+  
+  - name: Install Plugins.
+    shell: "{{ jenkins_home }}install-plugins.sh < {{ jenkins_home }}plugins.txt"
+
+  - name: Start Jenkins service.
+    systemd:
+      name: jenkins
+      state: restarted
+
+  - name: Wait for Jenkins Run.
+    wait_for: 
+      timeout: 30
+...

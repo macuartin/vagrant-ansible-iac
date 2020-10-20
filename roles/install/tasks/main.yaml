@@ -8,7 +8,7 @@
   - name: Import Jenkins Key.
     rpm_key:
       state: present
-      key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+      key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 
   - name: Install jenkins
     yum:
@@ -19,29 +19,5 @@
     systemd:
       name: jenkins
       enabled: true
-
-  - name: Check for init.groovy.d Directory
-    file:
-      path: "{{ jenkins_home }}/init.groovy.d"
-      state: directory
-
-  - name: Set initial setup script
-    copy:
-      src: InitialConfig.groovy
-      dest: "{{ jenkins_home }}/init.groovy.d/InitialConfig.groovy"
-
-  - name: Set initial plugins requirements
-    copy:
-      src: InstallPlugins.groovy
-      dest: "{{ jenkins_home }}/init.groovy.d/InstallPlugins.groovy"
-
-  - name: Start Jenkins service.
-    systemd:
-      name: jenkins
-      state: restarted
-
-  - name: Wait for Jenkins Run.
-    wait_for: timeout=15
-
 
 ...

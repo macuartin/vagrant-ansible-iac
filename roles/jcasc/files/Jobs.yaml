@@ -1,0 +1,72 @@
+jobs:
+    - script: >
+        folder('JenkinsConfig') {
+            displayName('JenkinsConfig')
+            description('Folder to store Jenkins configuration Jobs and assets')
+        }
+
+    - script: >
+        multibranchPipelineJob('JenkinsConfig/jcasc-configs') {
+            branchSources {
+                github {
+                    id = 'configuration-as-code'
+                    repoOwner('jeisson-forero91')
+                    repository('jcasc-configs')
+                    scanCredentialsId('git-jenkins')
+                    includes('master')
+                    buildForkPRHead(false)
+                }
+            }
+            configure {
+                def traits = it / sources / data / 'jenkins.branch.BranchSource' / source / traits
+                traits << 'org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait' {
+                    strategyId(3)
+                }
+                traits << 'org.jenkinsci.plugins.github__branch_source.OriginPullRequestDiscoveryTrait' {
+                    strategyId(2)
+                }
+            }
+            factory {
+                workflowBranchProjectFactory {
+                    scriptPath('Jenkinsfile')
+                }
+            }
+            orphanedItemStrategy {
+                discardOldItems {
+                    numToKeep(10)
+                }
+            }
+        }
+
+    - script: >
+        multibranchPipelineJob('JenkinsConfig/update-jobs') {
+            branchSources {
+                github {
+                    id = 'update-jobs'
+                    repoOwner('jeisson-forero91')
+                    repository('jenkins-jobs')
+                    scanCredentialsId('git-jenkins')
+                    includes('master')
+                    buildForkPRHead(false)
+                }
+            }
+            configure {
+                def traits = it / sources / data / 'jenkins.branch.BranchSource' / source / traits
+                traits << 'org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait' {
+                    strategyId(3)
+                }
+                traits << 'org.jenkinsci.plugins.github__branch_source.OriginPullRequestDiscoveryTrait' {
+                    strategyId(2)
+                }
+            }
+            factory {
+                workflowBranchProjectFactory {
+                    scriptPath('Jenkinsfile')
+                }
+            }
+            orphanedItemStrategy {
+                discardOldItems {
+                    numToKeep(10)
+                }
+            }
+        }

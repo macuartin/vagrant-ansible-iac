@@ -5,14 +5,12 @@
       name: "*"
       state: latest
   
-  - name: Install wget.
+  - name: Install a list of packages.
     yum:
-      name: wget
-      state: present
-
-  - name: Install Java.
-    yum:
-      name: java-1.8.0-openjdk
+      name: 
+        - wget
+        - unzip
+        - java-1.8.0-openjdk
       state: present
 
 ...

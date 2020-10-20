@@ -1,0 +1,15 @@
+---
+
+  - name: Check for jcasc Directory
+    file:
+      path: "{{ jenkins_home }}/jcasc/config"
+      state: directory
+  
+  - name: Set configuration yamls
+    copy:
+      src: "{{ item }}"
+      dest: "{{ jenkins_home }}/jcasc/config"
+      mode: '0744'
+    with_fileglob: "*.yaml"
+    
+...

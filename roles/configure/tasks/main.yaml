@@ -1,0 +1,22 @@
+---
+
+  - name: Check for init.groovy.d Directory
+    file:
+      path: "{{ jenkins_home }}/init.groovy.d"
+      state: directory
+
+  - name: Set initial setup scripts
+    copy:
+      src: "{{ item }}"
+      dest: "{{ jenkins_home }}/init.groovy.d"
+    with_fileglob: "*.groovy"
+  
+  - name: Start Jenkins service.
+    systemd:
+      name: jenkins
+      state: restarted
+
+  - name: Wait for Jenkins Run.
+    wait_for: 
+      timeout: 30
+...

@@ -1,0 +1,32 @@
+unclassified:
+  extendedEmailPublisher:
+    adminRequiredForTemplateTesting: false
+    allowUnregisteredEnabled: true
+    allowedDomains: "outlook.com,gmail.com,hotmail.com,ath.com.co"
+    charset: "UTF-8"
+    debugMode: true
+    defaultBody: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:\r\n\r\nCheck\
+      \ console output at $BUILD_URL to view the results."
+    defaultContentType: "text/html"
+    defaultRecipients: "jeforp_906@hotmail.com"
+    defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+    defaultSuffix: "@outlook.com"
+    maxAttachmentSize: -1
+    maxAttachmentSizeMb: 0
+    precedenceBulk: false
+    smtpPassword: ${smtp_password}
+    smtpPort: "587"
+    smtpServer: "smtp.office365.com"
+    smtpUsername: ${smtp_username}
+    useSsl: false
+    watchingEnabled: true
+  mailer:
+    authentication:
+      password: ${smtp_password}
+      username: ${smtp_username}
+    charset: "UTF-8"
+    defaultSuffix: "@hotmail.com"
+    smtpHost: "smtp.office365.com"
+    smtpPort: "587"
+    useSsl: false
+    useTls: true
