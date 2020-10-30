@@ -1,4 +1,4 @@
-# devops-ansible-vm-jenkins
+# vagrant-ansible-iac
 
 > Playbook de Ansible que permite la instalación de Jenkins en una o mas maquinas virtuales especificadas. Este playbook puede ser usado por Vagrant y Packer como provisioner.
 
@@ -27,13 +27,13 @@ Necesitaras tener instalado los siguientes componentes en la maquina remota.
 * Clona este repositorio
 
 ```bash
-$ git clone git@github.com:AvalCoeDevOps/devops-ansible-vm-jenkins.git
+$ git clone https://github.com/macuartin/vagrant-ansible-iac.git
 ```
 
-* Ve a la carpeta devops-ansible-vm-jenkins
+* Ve a la carpeta vagrant-ansible-iac
 
 ```bash
-$ cd devops-ansible-vm-jenkins
+$ cd vagrant-ansible-iac
 ```
 
 ## Quickstart
